@@ -33,13 +33,13 @@
 
   
 
-  <link rel="alternate" href="https://example.com/index.xml" type="application/rss+xml" title="James Uanhoro">
-  <link rel="feed" href="https://example.com/index.xml" type="application/rss+xml" title="James Uanhoro">
+  <link rel="alternate" href="https://jamesuanhoro.com/index.xml" type="application/rss+xml" title="James Uanhoro">
+  <link rel="feed" href="https://jamesuanhoro.com/index.xml" type="application/rss+xml" title="James Uanhoro">
 
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/apple-touch-icon.png">
 
-  <link rel="canonical" href="https://example.com/">
+  <link rel="canonical" href="https://jamesuanhoro.com/">
 
   
 
@@ -88,18 +88,6 @@
           <a href="/#projects" data-target="#projects">
             
             <span>Projects</span>
-          </a>
-        </li>
-
-        
-        
-
-        
-
-        <li class="nav-item">
-          <a href="/#publications_selected" data-target="#publications_selected">
-            
-            <span>Publications</span>
           </a>
         </li>
 
@@ -180,8 +168,8 @@
     <div id="profile">
 
       
-      <div class="portrait" style="background-image: url('https://example.com/img/portrait.jpg');"></div>
-      <meta itemprop="image" content="https://example.com/img/portrait.jpg">
+      <div class="portrait" style="background-image: url('https://jamesuanhoro.com/img/portrait.jpg');"></div>
+      <meta itemprop="image" content="https://jamesuanhoro.com/img/portrait.jpg">
       
 
       <div class="portrait-title">
@@ -196,7 +184,7 @@
         
       </div>
 
-      <link itemprop="url" href="https://example.com/">
+      <link itemprop="url" href="https://jamesuanhoro.com/">
 
       <ul class="social-icon" aria-hidden="true">
         
@@ -249,7 +237,9 @@
           
           <li>Program evaluation</li>
           
-          <li>Statistical education</li>
+          <li>Statistics education</li>
+          
+          <li>API development</li>
           
         </ul>
       </div>
@@ -310,7 +300,7 @@
           
             <a href="#" data-filter="*" class="btn btn-primary btn-large active">All</a>
           
-            <a href="#" data-filter=".effect-size" class="btn btn-primary btn-large">Effect sizes</a>
+            <a href="#" data-filter=".software" class="btn btn-primary btn-large">Software</a>
           
             <a href="#" data-filter=".data-viz" class="btn btn-primary btn-large">Data visualization</a>
           
@@ -323,279 +313,74 @@
 
     
 
-    <div id="container-projects" class="row isotope">
+    <div id="container-projects" class="isotope">
+      <ul class="fa-ul" style="position: relative">
 
-      
-      
-      
-      
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item effect-size">
-        <div class="card">
+        
+        <li class="project-item isotope-item data-viz">
+          <span class="project-title">
           
-          <a href="https://example.com/project/deep-learning/" title="" class="card-image hover-overlay"
-             >
-            <img src="/img/bubbles.jpg" alt="" class="img-responsive">
+            <a href="https://nigeria-poverty-profile.herokuapp.com/" target="_blank">
+          
+          <i class="fa-li fa fa-files-o pub-icon" aria-hidden="true"></i>
+          2010 Nigeria Poverty Profile
           </a>
+          </span>
+          <p class="project-summary">A visualization of the Nigerian Bureau of Statistics report</p>
+        </li>
+        
+        <li class="project-item isotope-item software data-viz">
+          <span class="project-title">
           
-          <div class="card-text">
-            <h4><a href="https://example.com/project/deep-learning/" >Deep Learning</a></h4>
-            <div class="card-desription">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-      
-      
-      
-      
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item demo">
-        <div class="card">
+            <a href="https://canvas-viz-app.herokuapp.com/" target="_blank">
           
-          <a href="http://example.org" title="" class="card-image hover-overlay"
-             target="_blank">
-            <img src="/img/boards.jpg" alt="" class="img-responsive">
+          <i class="fa-li fa fa-files-o pub-icon" aria-hidden="true"></i>
+          Canvas LMS Class Visualizations
           </a>
+          </span>
+          <p class="project-summary">A web application that helps the user visualize data from Canvas LMS - redundant now Canvas has implemented all these visualizations. Made with <a href="https://soumyaray.com/" target="_blank">Dr. Soumya Ray</a>.</p>
+        </li>
+        
+        <li class="project-item isotope-item software">
+          <span class="project-title">
           
-          <div class="card-text">
-            <h4><a href="http://example.org" target="_blank">External Project</a></h4>
-            <div class="card-desription">
-              <p>An example of linking directly to an external project website using <code>external_link</code>.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+          <a href="https://jamesuanhoro.com/project/effect-size-application/">
+          
+          <i class="fa-li fa fa-files-o pub-icon" aria-hidden="true"></i>
+          Effect size web application
+          </a>
+          </span>
+          <p class="project-summary">A web-based application for effect sizes and their confidence intervals</p>
+        </li>
+        
+        <li class="project-item isotope-item software">
+          <span class="project-title">
+          
+            <a href="https://mplus-output-scraper.herokuapp.com/" target="_blank">
+          
+          <i class="fa-li fa fa-files-o pub-icon" aria-hidden="true"></i>
+          Mplus LCA helper
+          </a>
+          </span>
+          <p class="project-summary">Automating latent class analysis in Mplus - made with Dr. Jessica Logan.</p>
+        </li>
+        
+        <li class="project-item isotope-item data-viz">
+          <span class="project-title">
+          
+            <a href="https://nigeria-poverty-profile.herokuapp.com/" target="_blank">
+          
+          <i class="fa-li fa fa-files-o pub-icon" aria-hidden="true"></i>
+          Nigerian budget proposal 2016
+          </a>
+          </span>
+          <p class="project-summary">A visualization of the the 2016 Nigerian budget</p>
+        </li>
+        
 
+      </ul>
     </div>
 
-    
-
-  </div>
-</div>
-
-    </div>
-  </section>
-
-  
-  
-  <section id="publications_selected" class="home-section">
-    <div class="container">
-      
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h1>Selected Publications</h1>
-    
-  </div>
-  <div class="col-xs-12 col-md-8">
-    
-
-    
-    
-    <div class="pub-list-item" itemscope itemtype="http://schema.org/CreativeWork">
-  <div class="row">
-
-    
-
-    <div class="col-md-12">
-      <a href="https://example.com/publication/clothing-search/">
-        <img src="/img/headers/bubbles-wide.jpg" class="pub-banner" itemprop="image">
-      </a>
-    </div>
-    <div class="col-md-12">
-
-    
-
-      <h3 class="article-title" itemprop="name">
-        <a href="https://example.com/publication/clothing-search/" itemprop="url">Mobile visual clothing search</a>
-      </h3>
-
-      <div class="pub-abstract" itemprop="text">
-        
-        A mobile visual clothing search system is presented whereby a smart phone user can either choose a social networking image or capture a new photo of a person wearing clothing of interest and search for similar clothing in a large cloud-based ecommerce database. The phone&rsquo;s GPS location is used to re-rank results by retail store location, to inform the user of local stores where similar clothing items can be tried on.
-        
-      </div>
-
-      <div class="pub-authors" itemprop="author">
-        
-        GA Cushen, MS Nixon
-        
-      </div>
-
-      <div class="pub-publication">
-        
-        In <em>ICMEW</em>
-        
-      </div>
-
-      <div class="pub-links">
-        
-
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/publication/clothing-search/">
-  Details
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="http://eprints.soton.ac.uk/352095/1/Cushen-IMV2013.pdf">
-  PDF
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Slides
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Video
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Code
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Dataset
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/project/deep-learning/">
-  Project
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="http://www.example.org">
-  Custom Link
-</a>
-
-
-      </div>
-
-    </div>
-  </div>
-</div>
-
-    
-    
-
-  </div>
-</div>
-
-    </div>
-  </section>
-
-  
-  
-  <section id="publications" class="home-section">
-    <div class="container">
-      
-
-
-
-
-<div class="row">
-  <div class="col-xs-12 col-md-4 section-heading">
-    <h1>Recent Publications</h1>
-    
-    
-  </div>
-  <div class="col-xs-12 col-md-8">
-    
-
-    
-    <ul class="fa-ul">
-      
-      <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name">A Person Re-Identification System For Mobile Devices</span>
-  <p>
-
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/publication/person-re-identification/">
-  Details
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="http://arxiv.org/pdf/1512.04133v1">
-  PDF
-</a>
-
-
-
-
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/project/deep-learning/">
-  Project
-</a>
-
-
-</p>
-</li>
-
-      
-      <li itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa-li fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name">Mobile visual clothing search</span>
-  <p>
-
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/publication/clothing-search/">
-  Details
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="http://eprints.soton.ac.uk/352095/1/Cushen-IMV2013.pdf">
-  PDF
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Slides
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Video
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Code
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/">
-  Dataset
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://example.com/project/deep-learning/">
-  Project
-</a>
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="http://www.example.org">
-  Custom Link
-</a>
-
-</p>
-</li>
-
-      
-    </ul>
     
 
   </div>
@@ -634,20 +419,16 @@
 <div class="article-list-item" itemscope itemprop="blogPost">
   
   
-  <a href="https://example.com/post/getting-started/">
-    <img src="/img/headers/getting-started.png" class="article-banner" itemprop="image">
-  </a>
-  
   <h3 class="article-title" itemprop="name">
-    <a href="https://example.com/post/getting-started/" itemprop="url">Getting started with the Academic framework for Hugo</a>
+    <a href="https://jamesuanhoro.com/post/interpretation-regression-coefficients/" itemprop="url">On the interpretation of regression coefficients</a>
   </h3>
   
 
 <div class="article-metadata">
 
   <span class="article-date">
-    <time datetime="2016-04-20 12:00:00 &#43;0000 UTC" itemprop="datePublished">
-      Wed, Apr 20, 2016
+    <time datetime="2017-08-11 10:00:00 &#43;0000 UTC" itemprop="datePublished">
+      Fri, Aug 11, 2017
     </time>
   </span>
 
@@ -659,10 +440,10 @@
   <span class="article-tags">
     <i class="fa fa-tags"></i>
     
-    <a href="/tags/academic">academic</a
+    <a href="/tags/regression">regression</a
     >, 
     
-    <a href="/tags/hugo">hugo</a
+    <a href="/tags/causality">causality</a
     >
     
   </span>
@@ -675,11 +456,13 @@
 
   <div class="article-style" itemprop="articleBody">
     
-    <p>Create a beautifully simple personal or academic website in under 10 minutes.</p>
+    We should interpret regression coefficients for continuous variables as we would descriptive dummy variables, unless we intend to make causal claims.
+ I am going to be teaching regression labs in the Fall, and somehow, I stumbled onto Gelman and Hill&rsquo;s Data analysis using regression and multilevel/hierarchical models. So I started reading it and it&rsquo;s a good book.
+A useful piece of advice they give is to interpret regression coefficients in a predictive manner (p.
     
   </div>
   <p class="read-more">
-    <a href="https://example.com/post/getting-started/" class="btn btn-primary btn-outline">
+    <a href="https://jamesuanhoro.com/post/interpretation-regression-coefficients/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
@@ -694,117 +477,7 @@
   
   
   <h3 class="article-title" itemprop="name">
-    <a href="https://example.com/post/widgets/" itemprop="url">Customizing the homepage with widgets</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    <time datetime="2016-04-20 11:00:00 &#43;0000 UTC" itemprop="datePublished">
-      Wed, Apr 20, 2016
-    </time>
-  </span>
-
-  
-
-  
-  
-  
-  <span class="article-tags">
-    <i class="fa fa-tags"></i>
-    
-    <a href="/tags/academic">academic</a
-    >, 
-    
-    <a href="/tags/hugo">hugo</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>Enable/disable and configure widgets to customize your homepage.</p>
-    
-  </div>
-  <p class="read-more">
-    <a href="https://example.com/post/widgets/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-        
-        
-
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="https://example.com/post/managing-content/" itemprop="url">Managing content</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    <time datetime="2016-04-20 11:00:00 &#43;0000 UTC" itemprop="datePublished">
-      Wed, Apr 20, 2016
-    </time>
-  </span>
-
-  
-
-  
-  
-  
-  <span class="article-tags">
-    <i class="fa fa-tags"></i>
-    
-    <a href="/tags/academic">academic</a
-    >, 
-    
-    <a href="/tags/hugo">hugo</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>This is a brief guide to managing content with the Academic framework. Content can include publications, projects, talks, and news/blog articles. After you have read this guide about creating and managing content, you may also be interested to learn about <a href="https://example.com/post/writing-markdown-latex/" target="_blank">writing content with Markdown, LaTeX, and Shortcodes</a>.</p>
-    
-  </div>
-  <p class="read-more">
-    <a href="https://example.com/post/managing-content/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-        
-        
-
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="https://example.com/post/writing-markdown-latex/" itemprop="url">Writing content with Markdown, LaTeX, and Shortcodes</a>
+    <a href="https://jamesuanhoro.com/post/writing-markdown-latex/" itemprop="url">Default content, retained as a guide: Writing content with Markdown, LaTeX, and Shortcodes</a>
   </h3>
   
 
@@ -821,54 +494,10 @@
   
   
   
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>Content can be written using <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a>, <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics" target="_blank">LaTeX math</a>, and <a href="http://gohugo.io/extras/shortcodes/" target="_blank">Hugo Shortcodes</a>. Additionally, HTML may be used for advanced formatting. This article gives an overview of the most common formatting options.</p>
-    
-  </div>
-  <p class="read-more">
-    <a href="https://example.com/post/writing-markdown-latex/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-        
-        
-
-
-<div class="article-list-item" itemscope itemprop="blogPost">
-  
-  
-  <h3 class="article-title" itemprop="name">
-    <a href="https://example.com/post/migrate-from-jekyll/" itemprop="url">Migrate from Jekyll to Hugo</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    <time datetime="2014-03-10 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      Mon, Mar 10, 2014
-    </time>
-  </span>
-
-  
-
-  
-  
-  
   <span class="article-tags">
     <i class="fa fa-tags"></i>
     
-    <a href="/tags/jekyll">jekyll</a
+    <a href="/tags/user-guide">user guide</a
     >
     
   </span>
@@ -881,11 +510,11 @@
 
   <div class="article-style" itemprop="articleBody">
     
-    <p>Learn how to migrate an existing website from Jekyll to Hugo.</p>
+    <p>Content can be written using <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a>, <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics" target="_blank">LaTeX math</a>, and <a href="http://gohugo.io/extras/shortcodes/" target="_blank">Hugo Shortcodes</a>. Additionally, HTML may be used for advanced formatting. This article gives an overview of the most common formatting options.</p>
     
   </div>
   <p class="read-more">
-    <a href="https://example.com/post/migrate-from-jekyll/" class="btn btn-primary btn-outline">
+    <a href="https://jamesuanhoro.com/post/writing-markdown-latex/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
@@ -923,11 +552,47 @@
       
       <li itemscope itemtype="http://schema.org/CreativeWork">
   <i class="fa-li fa fa-comment-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="name"><a href="https://example.com/talk/example-talk/">Example Talk</a></span>
+  <span itemprop="name"><a href="https://jamesuanhoro.com/talk/ggplot2-festival/">Data visualization with ggplot2</a></span>
   <p>
-    Sun, Jan 1, 2017,
+    Fri, Jul 21, 2017,
     
-            Hugo Academic Theme Conference
+            RMC Interdisciplinary Methods Festival: R You Ready? Make the Switch to R
+    
+  </p>
+</li>
+
+      
+      <li itemscope itemtype="http://schema.org/CreativeWork">
+  <i class="fa-li fa fa-comment-o pub-icon" aria-hidden="true"></i>
+  <span itemprop="name"><a href="https://jamesuanhoro.com/talk/es-demo-festival/">Effect size application demo</a></span>
+  <p>
+    Wed, Jul 19, 2017,
+    
+            RMC Interdisciplinary Methods Festival: Interactive Poster Session
+    
+  </p>
+</li>
+
+      
+      <li itemscope itemtype="http://schema.org/CreativeWork">
+  <i class="fa-li fa fa-comment-o pub-icon" aria-hidden="true"></i>
+  <span itemprop="name"><a href="https://jamesuanhoro.com/talk/intro-to-r-pub-pol/">Intro to R</a></span>
+  <p>
+    Tue, May 16, 2017,
+    
+            Intro to R with Public Policy undergrads
+    
+  </p>
+</li>
+
+      
+      <li itemscope itemtype="http://schema.org/CreativeWork">
+  <i class="fa-li fa fa-comment-o pub-icon" aria-hidden="true"></i>
+  <span itemprop="name"><a href="https://jamesuanhoro.com/talk/intro-to-spss-rmc-0/">Intro to SPSS</a></span>
+  <p>
+    Mon, Mar 20, 2017,
+    
+            RMC Event: Intro to SPSS with James Uanhoro
     
   </p>
 </li>
@@ -1076,12 +741,21 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
 
       
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/r.min.js"></script>
+      
 
       
 
       <script>hljs.initHighlightingOnLoad();</script>
     
 
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
     
     
 

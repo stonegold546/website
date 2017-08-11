@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "hsb <- read.csv(\"datasets/hsb_comb_full.csv\")\nnames(hsb)\n# Let's go with the first school, and the first 5 student-level variables\nhsb <- hsb[hsb$schoolid == hsb$schoolid[1], 1:5]\nsummary(hsb)\n# Mathach, ses and female seem to have some variability\n# Let's predict math achievement using female (dummy), ses (continuous)\nlm(mathach ~ female + ses, hsb)\n",
+    "created" : 1502486786489.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1107100513",
+    "id" : "4987EA1",
+    "lastKnownWriteTime" : 1502487993,
+    "last_content_update" : 1502487993235,
+    "path" : "~/dev/website/r_scripts/interpreting_regression_coefficients.R",
+    "project_path" : "interpreting_regression_coefficients.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

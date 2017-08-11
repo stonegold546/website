@@ -1,0 +1,4 @@
+[[menu.main]]
+  name = "Publications"
+  url = "#publications_selected"
+  weight = 3

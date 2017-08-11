@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1502487145683.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "3AF6051C",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1502487145683,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "F341EE36",
+        "caption" : "hsb",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=hsb&cache_key=F341EE36",
+        "displayedObservations" : "7185",
+        "environment" : "",
+        "object" : "hsb",
+        "preview" : "0",
+        "totalObservations" : "7185",
+        "variables" : "14"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

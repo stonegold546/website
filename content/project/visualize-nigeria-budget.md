@@ -16,7 +16,7 @@ image_preview = "projects/nbp.png"
 tags = ["data-viz"]
 
 # Optional external URL for project (replaces project detail page).
-external_link = "https://nigeria-poverty-profile.herokuapp.com/"
+external_link = "https://visualize-budget.herokuapp.com/"
 
 # Does the project detail page use math formatting?
 math = false

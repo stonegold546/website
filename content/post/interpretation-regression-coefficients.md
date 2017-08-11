@@ -7,7 +7,7 @@ math = true
 +++
 
 {{% alert note %}}
-We should interpret regression coefficients for continuous variables as we would for dummy variables, unless we intend to make causal claims.
+We should interpret regression coefficients for continuous variables as we would descriptive dummy variables, unless we intend to make causal claims.
 {{% /alert %}}
 
 I am going to be teaching regression labs in the Fall, and somehow, I stumbled onto Gelman and Hill's Data analysis using regression and multilevel/hierarchical models. So I started reading it and it's a good book.

@@ -61,7 +61,7 @@ The problem arises with the interpretation of `ses`, it typically goes:
 
 We typically claim this is a correlational statement, devoid of causal claims. However, it has causal overtones. It insinuates that within an individual, if we could raise their SES by 1 point, we can expect an increase in math achievement by 2.64 points.
 
-Gelman and Hill advice phrasing like this:
+Gelman and Hill advice phrasing its interpretation like this:
 
 > For students of the same gender, we expect a 2.64-point difference in math achievement between students who have a point difference in SES.
 

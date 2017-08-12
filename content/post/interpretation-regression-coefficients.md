@@ -10,7 +10,7 @@ math = true
 We should interpret regression coefficients for continuous variables as we would descriptive dummy variables, unless we intend to make causal claims.
 {{% /alert %}}
 
-I am going to be teaching regression labs in the Fall, and somehow, I stumbled onto Gelman and Hill's Data analysis using regression and multilevel/hierarchical models. So I started reading it and it's a good book.
+I am going to be teaching regression labs in the Fall, and somehow, I stumbled onto Gelman and Hill's _Data analysis using regression and multilevel/hierarchical models_.[^1] So I started reading it and it's a good book.
 
 A useful piece of advice they give is to interpret regression coefficients in a predictive manner (p. 34). To see what they mean, let us consider an example.
 
@@ -67,8 +67,4 @@ Gelman and Hill advice phrasing its interpretation like this:
 
 This is what they call a _predictive interpretation_ of regression coefficients. It is devoid of causality, and communicates that we are making predictions for or describing the difference between different individuals.
 
----
-
-## Work cited:
-
-1. Gelman, A., & Hill, J. (2007). _Data analysis using regression and multilevel/hierarchical models_. Cambridge University Press.
+[^1]: Gelman, A., & Hill, J. (2007). _Data analysis using regression and multilevel/hierarchical models_. Cambridge University Press.

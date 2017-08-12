@@ -18,9 +18,9 @@ A useful piece of advice they give is to interpret regression coefficients in a 
 
 I'll use a [subset of the High School & Beyond dataset](/misc/hsb_comb_full.csv).
 
-hsb <- read.csv("datasets/hsb_comb_full.csv")
 ```r
-head(hsb)
+hsb <- read.csv("datasets/hsb_comb_full.csv")
+names(hsb)
 [1] "schoolid" "minority" "female"   "ses"      "mathach"  "size"     "sector"   
 [8] "pracad"   "disclim"  "himinty"  "MEANSES"  "N_BREAK"  "sesdev"   "myschool"
 
@@ -61,11 +61,11 @@ The problem arises with the interpretation of `ses`, it typically goes:
 
 We typically claim this is a correlational statement, devoid of causal claims. However, it has causal overtones. It insinuates that within an individual, if we could raise their SES by 1 point, we can expect an increase in math achievement by 2.64 points.
 
-Gelman and Hill advice this phrasing:
+Gelman and Hill advice phrasing like this:
 
 > For students of the same gender, we expect a 2.64-point difference in math achievement between students who have a point difference in SES.
 
-This is what they call a _predictive interpretation_ of regression coefficients. It is devoid of causality, and communicates that we are describing the difference between or making predictions for different individuals.
+This is what they call a _predictive interpretation_ of regression coefficients. It is devoid of causality, and communicates that we are making predictions for or describing the difference between different individuals.
 
 ---
 

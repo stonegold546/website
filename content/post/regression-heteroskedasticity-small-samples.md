@@ -14,9 +14,9 @@ Today while teaching the multiple regression lab, I showed the class the standar
 
 I mentioned to the class that some folks would recommend applying HCSEs by default. After class, I tried to learn about the difference between the different HCs. The following papers were helpful: Zeileis (2004),[^1] Long & Ervin (2000),[^2] Cribari-Neto, Souza & Vasconcellos (2007),[^3] and Hausman & Palmer (2012)[^4]. The [documentation for the sandwich package](https://cran.r-project.org/web/packages/sandwich/sandwich.pdf) was a big help. The Hausman & Palmer (H&P) paper is probably best if you're only going to read one of the papers, and it can also serve as a short handy reference for dealing with heteroskedasticity at small sample sizes.
 
-I learned that **HCSEs can be problematic (H&P Table 1)**. Additionally, the **Wild Bootstrap does a good job of maintaining the nominal error rate in small samples (_n=40_) under homoskedasticity, moderate heteroskedasticity and severe heteroskedasticity (H&P Table 1). It is also statistically powerful (H&P Fig. 1 & 2)**. The good thing is the [hcci package](https://cran.r-project.org/web/packages/hcci/index.html) contains a function called `Pboot` which performs the wild bootstrap to correct for heteroskedasticity.
+I learned that **HCSEs can be problematic (H&P Table 1)**. Additionally, the **Wild Bootstrap does a good job of maintaining the nominal error rate in small samples (_n=40_) under homoskedasticity, moderate heteroskedasticity and severe heteroskedasticity (H&P Table 1). It is also statistically powerful (H&P Fig. 1 & 2)**. The good thing is the [hcci package](https://cran.r-project.org/web/packages/hcci/index.html) contains a function called `Pboot()` which performs the wild bootstrap to correct for heteroskedasticity.
 
-As far as I see, the function has one limitation: when you perform your regression, you cannot use the optional dataframe argument from lm. Here's an example with [this dataset](/misc/atlschools.csv):
+As far as I see, the function has one limitation: when you perform your regression, you cannot use the optional dataframe argument in `lm()`. Here's an example with [this dataset](/misc/atlschools.csv):
 
 ```{r}
 library(hcci)

@@ -16,7 +16,7 @@ A useful piece of advice they give is to interpret regression coefficients in a 
 
 ## Predicting student performance
 
-I'll use a [subset of the High School & Beyond dataset](/misc/hsb_comb_full.csv).
+I'll use a [subset of the High School & Beyond dataset](/misc/datasets/hsb_comb_full.csv).
 
 ```r
 hsb <- read.csv("datasets/hsb_comb_full.csv")

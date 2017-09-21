@@ -28,7 +28,7 @@ caption = "Screenshot of application homepage :smile:"
 
 +++
 
-This is a calculator I originally built as a [spreadsheet](/misc/cohens_d_calculator.xls) for the Introduction to Educational Statistics class I served as lab instructor/teaching assistant for. I initially intended that it focus only on the Cohen's _d_ family of effect sizes.
+This is a calculator I originally built as a [spreadsheet](/misc/others/cohens_d_calculator.xls) for the Introduction to Educational Statistics class I served as lab instructor/teaching assistant for. I initially intended that it focus only on the Cohen's _d_ family of effect sizes.
 
 You can find the calculator here: https://effect-size-calculator.herokuapp.com/.
 

@@ -10,7 +10,7 @@ math = true
 Little's MCAR test is unable to tell data that are MCAR from data that are MAR in small samples, but maintains the nominal error rate when null is true across a wide range of sample sizes.
 {{% /alert %}}
 
-I just found out about the R [simglm package](https://cran.r-project.org/web/packages/simglm/simglm.pdf) and decided to do a small simulation to test Little's MCAR test[^1] under different sample sizes. I could have investigated heteroskedasticity in linear regression instead, and I probably will in the future. I was able to find some examples of researchers using Little's MCAR test at small sample sizes, so I ran a toy simulation.
+I just found out about the R [simglm package](https://cran.r-project.org/web/packages/simglm/index.html) and decided to do a small simulation to test Little's MCAR test[^1] under different sample sizes. I could have investigated heteroskedasticity in linear regression instead, and I probably will in the future. I was able to find some examples of researchers using Little's MCAR test at small sample sizes, so I ran a toy simulation.
 
 ![Data are MCAR](/img/posts/little_mcar/zoom_in.png)
 ![Data are MAR](/img/posts/little_mcar/zoom_in_mar.png)

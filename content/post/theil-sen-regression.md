@@ -26,7 +26,7 @@ There are several methods to obtain the intercept. It is reasonable to know what
 
 Re my comment at the top regarding Theil-Sen for simple linear regression when there are concerns about outliers and heteroscedasticity, see Dietz[^4] and Wilcox[^5] below.
 
-I also conducted a [toy simulation](/misc/scripts/ts_sim.R) to show how the Theil-Sen slope competes with OLS under heteroscedasticity. OLS point estimates are unbiased by heteroscedasticity (in the long-run).
+I conducted a [toy simulation](/misc/scripts/ts_sim.R) to see how Theil-Sen competes with OLS under heteroscedasticity.
 
 ![Simulation results](/img/posts/ts_hetero/0_slopes_hetero.png)
 ![25 random samples from simulation](/img/posts/ts_hetero/0_heteroscedastic_samples.png)

@@ -10,7 +10,7 @@ math = true
 If you have good measurement quality, conventional benchmarks for fit indices may lead to bad decisions. Additionally, global fit indices are not informative for investigating misspecification.
 {{% /alert %}}
 
-I am working with one of my professors, [Dr. Jessica Logan](http://statsineducation.tumblr.com/), on a checklist for the developmental progress of young children. We intend to take this down the IRT route (or ordinal logistic regression), but currently, this is all part of a factor analysis course project. So I ran some CFA models, and was discussing model fit with Dr. Logan. I commented that factor loadings were generally high (> .8), but initial model fit was inadequate to play the model fit game, for example, RMSEA > .06, ... She commented that she was not so worried by this combination: high loadings together with failure to meet conventional model fit guidelines. And pointed me towards a recent paper by Dan McNeish, Ji An and Gregory Hancock,[^1] hereafter _MAH_, - the paper is available on [ResearchGate](https://www.researchgate.net/publication/311536084_The_Thorny_Relation_between_Measurement_Quality_and_Fit_Index_Cut-Offs_in_Latent_Variable_Models).
+I am working with one of my professors, [Dr. Jessica Logan](http://statsineducation.tumblr.com/), on a checklist for the developmental progress of young children. We intend to take this down the IRT route (or ordinal logistic regression), but currently, this is all part of a factor analysis course project. So I ran some CFA models, and was discussing model fit with Dr. Logan. I commented that factor loadings were generally high (1st quartile = .80, M/Mdn = .84), but initial model fit was inadequate to play the model fit game, for example, RMSEA > .06, ... She commented that she was not so worried by this combination: high loadings together with failure to meet conventional model fit guidelines. And pointed me towards a recent paper by Dan McNeish, Ji An and Gregory Hancock,[^1] hereafter _MAH_, - the paper is available on [ResearchGate](https://www.researchgate.net/publication/311536084_The_Thorny_Relation_between_Measurement_Quality_and_Fit_Index_Cut-Offs_in_Latent_Variable_Models).
 
 MAH's argument hinges on an important point: all models are usually misspecified in practice. Counterintuitively, holding misspecification constant, models with lower factor loadings (or poorer measurement quality) have better fit indices than models with higher factor loadings. For example, if two models have the same level of misspecification, and one with factor loadings of .9 could have RMSEA higher than .2, and a model with factor loadings of .4 could have RMSEA less than .05. The paper contains some charts that communicate these results very clearly.
 
@@ -54,6 +54,8 @@ The nice thing is this is all implemented in `lavaan` in R. Misspecification cod
 
 ```{r}
 library(lavaan)
+# For this, I'll assume HolzingerSwineford1939 data are 9 questions, and the
+# respondents answered them x1 to x9 sequentially
 data("HolzingerSwineford1939")
 # model syntax for HolzingerSwineford1939 dataset
 (syntax <- paste(
@@ -124,11 +126,15 @@ Variances:
 
 # Request modification indices. Sort them from highest to lowest
 # Do not print any MI below 3 for convenience of presentation
-# Apply SSV method by requesting power = TRUE, and setting delta
+# Apply SSV method by requesting power = TRUE, and setting delta.
+# delta for those who skipped is unacceptable level of misfit, so a delta = .4
+# standard for factor loadings means I care about the factor loading if it is
+# missing from my model and its factor loading is greater than .4
 # By default, delta = .1 in lavaan. Based on SSV's recommendations, this is
-# adequate for correlated errors. So right now, I will ignore the decisions
-# for the factors like the first one suggesting I load x9 on factor 1.
-modificationindices(hs.fit, sort. = TRUE, minimum.value = 3, power = TRUE)
+# adequate for correlated errors. So I select only correlated errors for output
+# using op = "~~"
+modificationindices(hs.fit, sort. = TRUE, minimum.value = 3, power = TRUE,
+                    op = "~~")
 
 
 lhs op rhs        mi    epc sepc.all delta   ncp power decision
@@ -155,6 +161,7 @@ lhs op rhs        mi    epc sepc.all delta   ncp power decision
 45  x1 ~~  x4  3.554  0.078    0.058   0.1 5.797 0.673      (i)
 35  f2 =~  x8  3.359 -0.120   -0.118   0.1 2.351 0.335      (i)
 
+# Check the decision column
 # x7 and x8 is termed misspecification because power is low at .193, yet the MI
 # is statistically significant. However, this may simply be due to order
 # effects, and such misspecification can be acceptable. I will not add this
@@ -172,20 +179,28 @@ lhs op rhs        mi    epc sepc.all delta   ncp power decision
 # statistically significant, hence this is inconclusive.
 
 # Now for the factor loadings
-modificationindices(hs.fit, sort. = TRUE, minimum.value = 3, power = TRUE,
-                    delta = .4)
+modificationindices(hs.fit, sort. = TRUE, power = TRUE, delta = .4, op = "=~")
 
-lhs op rhs        mi    epc sepc.all delta     ncp power decision
-30  f1 =~  x9 36.411  0.519    0.515   0.4  21.620 0.996  *epc:m*
-28  f1 =~  x7 18.631 -0.380   -0.349   0.4  20.696 0.995   epc:nm
-33  f2 =~  x3  9.151 -0.269   -0.238   0.4  20.258 0.994   epc:nm
-31  f2 =~  x1  8.903  0.347    0.297   0.4  11.849 0.931   epc:nm
-26  f1 =~  x5  7.441 -0.189   -0.147   0.4  33.388 1.000   epc:nm
-36  f2 =~  x9  4.796  0.137    0.136   0.4  40.904 1.000   epc:nm
-29  f1 =~  x8  4.295 -0.189   -0.187   0.4  19.178 0.992   epc:nm
-35  f2 =~  x8  3.359 -0.120   -0.118   0.4  37.614 1.000     (nm)
+lhs op rhs        mi    epc sepc.all delta    ncp power decision
+30  f1 =~  x9 36.411  0.519    0.515   0.4 21.620 0.996  *epc:m*
+28  f1 =~  x7 18.631 -0.380   -0.349   0.4 20.696 0.995   epc:nm
+33  f2 =~  x3  9.151 -0.269   -0.238   0.4 20.258 0.994   epc:nm
+31  f2 =~  x1  8.903  0.347    0.297   0.4 11.849 0.931   epc:nm
+26  f1 =~  x5  7.441 -0.189   -0.147   0.4 33.388 1.000   epc:nm
+36  f2 =~  x9  4.796  0.137    0.136   0.4 40.904 1.000   epc:nm
+29  f1 =~  x8  4.295 -0.189   -0.187   0.4 19.178 0.992   epc:nm
+35  f2 =~  x8  3.359 -0.120   -0.118   0.4 37.614 1.000     (nm)
+27  f1 =~  x6  2.843  0.100    0.092   0.4 45.280 1.000     (nm)
+38  f3 =~  x2  1.580 -0.123   -0.105   0.4 16.747 0.984     (nm)
+25  f1 =~  x4  1.211  0.069    0.059   0.4 40.867 1.000     (nm)
+39  f3 =~  x3  0.716  0.084    0.075   0.4 16.148 0.980     (nm)
+42  f3 =~  x6  0.273  0.027    0.025   0.4 58.464 1.000     (nm)
+41  f3 =~  x5  0.201 -0.027   -0.021   0.4 43.345 1.000     (nm)
+34  f2 =~  x7  0.098 -0.021   -0.019   0.4 36.318 1.000     (nm)
+32  f2 =~  x2  0.017 -0.011   -0.010   0.4 21.870 0.997     (nm)
+37  f3 =~  x1  0.014  0.015    0.013   0.4  9.700 0.876     (nm)
+40  f3 =~  x4  0.003 -0.003   -0.003   0.4 52.995 1.000     (nm)
 
-# I have deleted the lines for correlated errors
 
 # See the first line, suggesting I load x9 on f1. The power is high, the MI is
 # significant and the EPC is higher than .4 suggesting that this is some type
@@ -194,18 +209,23 @@ lhs op rhs        mi    epc sepc.all delta     ncp power decision
 # However, the next line suggests I load x7 on f1. The power is high, the MI is
 # significant, but the EPC is .38, less than .4, suggesting that we do not
 # consider this misspecification to be high enough to warrant modifying the
-# model. Same goes for the other suggested modification bar the final one here.
-# Its power is high, but the MI is not statistically significant, so we can
-# conclude there is no misspecification.
+# model. Same goes for a number of suggested modifications with decision epc:nm.
+
+# Then there is a final group with high power, but the MIs are not
+# statistically significant, so we can conclude there is no misspecification.
+
+# Note that you can also tell lavaan what constitutes high power using the
+# `high.power = ` argument. 75% is what SSV use and lavaan's default but you
+# can be flexible.
 ```
 
-Note that you make only one change to the model at a time. The EPC and MI, are calculated assuming other parameters are approximately correct, hence the way to run the steps above is to make one change, then re-request the MIs, EPC, from `lavaan`.
+Note that you make only one change to the model at a time. The EPC and MI, are calculated assuming other parameters are approximately correct, hence the way to run the steps above is to make one change, then re-request the MIs, EPC, and power from `lavaan`.
 
 I believe this is the approach recommended by SSV, and following this approach would cause one to think about the model when using MIs, while taking statistical power to detect misspecification into account. It is possible to resolve all the non-inconclusive relationships (using theory, modifications, ...) and be left with a model where you do not have the power to detect the remaining misspecifications (a bunch of inconclusives). This would be another reason to reduce our confidence in our final modeling results.
 
 ---
 
-> P.S.: Another approach to latent variable model is PLS path modeling. It is a method for SEMs based on OLS regression. It stems from the work of Hermann Wold. Wold was Joreskog's (LISREL) advisor, Joreskog was Muthen's (Mplus) advisor. This is why my title uses _covariance-based SEM_ instead of _latent variable models_.
+> P.S.: Another approach to latent variable modeling is PLS path modeling. It is a method for SEMs based on OLS regression. It stems from the work of Hermann Wold. Wold was Joreskog's (LISREL) advisor, Joreskog was Muthen's (Mplus) advisor. This is why my title uses _covariance-based SEM_ instead of _latent variable models_ or just _SEMs_.
 
 [^1]: McNeish, D., An, J., & Hancock, G. R. (2017). The Thorny Relation Between Measurement Quality and Fit Index Cutoffs in Latent Variable Models. _Journal of Personality Assessment_. https://doi.org/10.1080/00223891.2017.1281286
 [^2]: Saris, W. E., Satorra, A., & van der Veld, W. M. (2009). Testing Structural Equation Models or Detection of Misspecifications? _Structural Equation Modeling: A Multidisciplinary Journal, 16_(4), 561–582. https://doi.org/10.1080/10705510903203433

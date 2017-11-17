@@ -46,6 +46,14 @@ And for a test of mediocre fit, $\lambda$ is:
 
 $RMSEA^2 \times df(N-1) = .08^2 \times df(N-1) = .0064 \times df(N-1)$
 
+Note that on page 241 of Browne and Cudeck (1993),[^4] they instead use a non-centrality parameter they refer to as $\lambda^\*$ that is:
+
+$RMSEA^2 \times df \times N$, i.e.
+
+$.0025 \times df \times N$ for testing close fit
+
+This is what lavaan does.[^5] The MacCallum, Browne, and Sugawara paper used $\lambda$ not $\lambda^\*$. I do not know why there is this difference.
+
 Hence, given a model degrees of freedom, and sample size, we can calculate the non-centrality parameter $(\lambda)$. And given $\lambda$, a $\chi^2$ value and the degrees of freedom for the model, we can calculate the p-value for a test of close or mediocre fit.
 
 The R syntax for this is:
@@ -121,9 +129,9 @@ pchisq(q = 42.291, df = 21, ncp = ncp.close, lower.tail = FALSE)
 # The p-value for a test of close fit is .27, close to the value reported by
 # lavaan. The reason they are not closer is that lavaan does not subtract 1
 # from the sample size when calculating the non-centrality parameter.
-# I found out by digging around this page and calculating in R: https://github.com/cran/lavaan/blob/d7bdae575dd78d5ac518e30f84ccfb57023819af/R/lav_fit_measures.R
-# I am not sure why. In the MacCallum paper, equation 8, the formula for the
-# non-centrality parameter is (N - 1) * df * RMSEA^2.
+# In the MacCallum paper, equation 8, the formula for the non-centrality
+# parameter is (N - 1) * df * RMSEA^2. However, in the older Browne and Cudeck
+# paper, they used N * df * RMSEA^2, what lavaan does.
 
 # And if we lower our standards to conduct a chi-square test of mediocre fit:
 # .0064 multiplied by model degrees of freedom by sample size - 1
@@ -149,3 +157,5 @@ In closing, SEM practitioners typically report the $\chi^2$-test, but routinely 
 [^1]: MacCallum, R. C., Browne, M. W., & Sugawara, H. M. (1996). Power analysis and determination of sample size for covariance structure modeling. _Psychological Methods, 1_(2), 130–149. https://doi.org/10.1037/1082-989X.1.2.130
 [^2]: I always thought mediocre meant a bad thing, it only means unexceptional, ordinary.
 [^3]: I got this unoriginal idea from discussing with one of my colleagues, Menglin Xu. We were chatting around 11 pm in the office and she mentioned the non-central $\chi^2$ distribution in SEMs. Given my interest in non-central distributions in relation to [confidence intervals for effect sizes](https://effect-size-calculator.herokuapp.com/), this idea came to mind.
+[^4]: Browne, M. W., & Cudeck, R. (1992). Alternative Ways of Assessing Model Fit. _Sociological Methods & Research, 21_(2), 230–258. https://doi.org/10.1177/0049124192021002005
+[^5]: I found out by digging around [this page](https://github.com/cran/lavaan/blob/d7bdae575dd78d5ac518e30f84ccfb57023819af/R/lav_fit_measures.R) and calculating in R. I guess it is safer to go with the original Browne and Cudeck paper, or what lavaan does. But the reader can make that choice for themselves.

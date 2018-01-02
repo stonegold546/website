@@ -6,10 +6,6 @@ title = "Using glmer() to perform Rasch analysis"
 math = true
 +++
 
-<!-- {{% alert note %}}
-If you can assume close fit for the RMSEA, there is no reason why you cannot for a Chi-Square test in SEMs. The method to do this is relatively simple, and may cause SEM practitioners to reconsider the Chi-Square test.
-{{% /alert %}} -->
-
 I've been interested in the relationship between ordinal regression and item response theory for a few months now. There are several helpful papers on the topic, here are some randomly picked ones [^1] [^2] [^3] [^4] [^5], and a book.[^6] In this post, I focus on Rasch analysis. To do any of these analyses as a regression, your data need to be in long format - single column identifying items (regression predictor), single column with item response categories (regression outcome), and column holding the person ID. Using the right dummy coding of the variables, you can get so-called _item difficulties_ as regression coefficients for the items - more on this later.
 
 Most recently, I spent some type trying to understand (in English) the different estimation methods. The clearest reading I found is the Software chapter of De Boeck & Wilson's Explanatory item response models, the final chapter.[^6] I've learned a few things. The three most common estimation methods are:

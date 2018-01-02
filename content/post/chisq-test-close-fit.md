@@ -46,13 +46,7 @@ And for a test of mediocre fit, $\lambda$ is:
 
 $RMSEA^2 \times df(N-1) = .08^2 \times df(N-1) = .0064 \times df(N-1)$
 
-Note that on page 241 of Browne and Cudeck (1993),[^4] they instead use a non-centrality parameter they refer to as $\lambda^\*$ that is:
-
-$RMSEA^2 \times df \times N$, i.e.
-
-$.0025 \times df \times N$ for testing close fit
-
-This is what lavaan does.[^5] The MacCallum, Browne, and Sugawara paper used $\lambda$ not $\lambda^\*$. I do not know why there is this difference.
+Note that lavaan may do things a little differently.[^4]
 
 Hence, given a model degrees of freedom, and sample size, we can calculate the non-centrality parameter $(\lambda)$. And given $\lambda$, a $\chi^2$ value and the degrees of freedom for the model, we can calculate the p-value for a test of close or mediocre fit.
 
@@ -128,10 +122,8 @@ pchisq(q = 42.291, df = 21, ncp = ncp.close, lower.tail = FALSE)
 
 # The p-value for a test of close fit is .27, close to the value reported by
 # lavaan. The reason they are not closer is that lavaan does not subtract 1
-# from the sample size when calculating the non-centrality parameter.
-# In the MacCallum paper, equation 8, the formula for the non-centrality
-# parameter is (N - 1) * df * RMSEA^2. However, in the older Browne and Cudeck
-# paper, they used N * df * RMSEA^2, what lavaan does.
+# from the sample size when calculating the non-centrality parameter under
+# its default settings for ML. See the final footnote below for details.
 
 # And if we lower our standards to conduct a chi-square test of mediocre fit:
 # .0064 multiplied by model degrees of freedom by sample size - 1
@@ -157,5 +149,4 @@ In closing, SEM practitioners typically report the $\chi^2$-test, but routinely 
 [^1]: MacCallum, R. C., Browne, M. W., & Sugawara, H. M. (1996). Power analysis and determination of sample size for covariance structure modeling. _Psychological Methods, 1_(2), 130–149. https://doi.org/10.1037/1082-989X.1.2.130
 [^2]: I always thought mediocre meant a bad thing, it only means unexceptional, ordinary.
 [^3]: I got this unoriginal idea from discussing with one of my colleagues, Menglin Xu. We were chatting around 11 pm in the office and she mentioned the non-central $\chi^2$ distribution in SEMs. Given my interest in non-central distributions in relation to [confidence intervals for effect sizes](https://effect-size-calculator.herokuapp.com/), this idea came to mind.
-[^4]: Browne, M. W., & Cudeck, R. (1992). Alternative Ways of Assessing Model Fit. _Sociological Methods & Research, 21_(2), 230–258. https://doi.org/10.1177/0049124192021002005
-[^5]: I found out by digging around [this page](https://github.com/cran/lavaan/blob/d7bdae575dd78d5ac518e30f84ccfb57023819af/R/lav_fit_measures.R) and calculating in R. I guess it is safer to go with the original Browne and Cudeck paper, or what lavaan does. But the reader can make that choice for themselves.
+[^4]: I found out by digging around [this page](https://github.com/cran/lavaan/blob/d7bdae575dd78d5ac518e30f84ccfb57023819af/R/lav_fit_measures.R) and calculating in R. I continued exploring and noticed lavaan using $N$ only happens with ML estimation. If you try WLSMV estimation, lavaan uses $N-1$; and I got very confused on noticing this and emailed one of my factor analysis professors, Paul De Boeck. He replied in an email mentioning Wishart, bias correction and the lavaan manual. From the lavaan manual, lavaan's default for ML estimation is something it refers to as the _normal likelihood approach_. When it does this, it uses $N$. If you change it to the _wishart likelihood approach_ by specifying `likelihood = "wishart"` within the `sem()`, `cfa()` or `lavaan()` functions, it then uses $N-1$. This is only relevant for ML estimation. For other estimation methods, it's $N-1$. I spent a few hours learning about the problem then trying to figure out what was going on, and I got an email reply within minutes of emailing my professor :). [From the lavaan website on Wishart versus Normal](http://lavaan.ugent.be/tutorial/est.html).

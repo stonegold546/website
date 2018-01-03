@@ -6,7 +6,7 @@ title = "Using glmer() to perform Rasch analysis"
 math = true
 +++
 
-I've been interested in the relationship between ordinal regression and item response theory for a few months now. There are several helpful papers on the topic, here are some randomly picked ones [^1] [^2] [^3] [^4] [^5], and a book.[^6] In this post, I focus on Rasch analysis. To do any of these analyses as a regression, your data need to be in long format - single column identifying items (regression predictor), single column with item response categories (regression outcome), and column holding the person ID. Using the right dummy coding of the variables, you can get so-called _item difficulties_ as regression coefficients for the items - more on this later.
+I've been interested in the relationship between ordinal regression and item response theory (IRT) for a few months now. There are several helpful papers on the topic, here are some randomly picked ones [^1] [^2] [^3] [^4] [^5], and a book.[^6] In this post, I focus on Rasch analysis. To do any of these analyses as a regression, your data need to be in long format - single column identifying items (regression predictor), single column with item response categories (regression outcome), and column holding the person ID. Using the right dummy coding of the variables, you can get so-called _item difficulties_ as regression coefficients for the items - more on this later.
 
 Most recently, I spent some type trying to understand (in English) the different estimation methods. The clearest reading I found is the Software chapter of De Boeck & Wilson's Explanatory item response models, the final chapter.[^6] I've learned a few things. The three most common estimation methods are:
 
@@ -424,7 +424,7 @@ ggplot(summarise(group_by(test.info.df, theta), info = 1 / sqrt(sum(info))),
 # This is the one I like best, because I feel it is most informative. This plot shows that for a kid with an estimated ability of -3, their ability is estimated with such precision that their actual score could lie between -1.5 and -4.5. In the middle at 0, the actual score could lie between, by my guess, -.8 and .8. I am not so sure this interpretation is correct, but it is appealing :).
 ```
 
-I'm not sure what I have achieved here, apart from a lot of ggplot-ing, ... But having worked through this, I feel I can better understand what the model is trying to claim a series of items, and what some of its diagnostics are about. I guess the next step would be to replicate this on real data I am working on. The `VGAM` package is probably best for this, as it can perform several forms of ordinal regression. There is also the `ordinal` package, but it only does cumulative logit regression.
+I'm not sure what I have achieved here, apart from a lot of ggplot-ing, ... But having worked through this, I feel I can better understand what the model is trying to claim a series of items, and what some of its diagnostics are about. I guess the next step would be to replicate this on real data I am working on. The `ordinal` package could work for this, as it performs ordinal multilevel regression. However, it only performs cumulative link logistic regression, which Rijmen et al.[^1] call the _graded response model_ in IRT.
 
 I have left out differential item functioning, but I believe that to be testing the fixed effects of groups in the data, and testing the interaction between test items and groups.[^2]
 

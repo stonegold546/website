@@ -20,25 +20,32 @@ After doing the reading, I decided to try out a Rasch analysis, produce several 
 
 ## Demonstration
 
-Following this demonstration probably requires good knowledge of ggplot2 and dplyr to create the plots.
+<sub>Following this demonstration probably requires good knowledge of ggplot2 and dplyr to create the plots.</sub>
 
 ```r
 library(eRm) # Standard Rasch analysis with CML estimation
-library(glmmTMB) # Better for binary logistic regression than glmer, but does not accept contrasts. If you want your regression coefficients to be item difficulties on arrival, not good
-# library(survival) # Handles conditional logistic regression, clogit(), but does not accept contrasts
+# glmmTMB for binary logistic regression than glmer, but does not accept contrasts.
+# If you want your regression coefficients to be item difficulties on arrival, not good
+# library(glmmTMB)
+# survival performs conditional logistic regression, clogit(), but does not accept contrasts
+# library(survival)
 library(Epi) # For conditional logistic regression with contrasts
 library(lme4) # For glmer
 library(ggplot2) # For plotting
 library(ggrepel) # For plot labeling
 library(dplyr) # For data manipulation
 library(scales) # For formatted percent on ggplot axes
-
-# Data comes from eRm package, it is simulated, has 30 items and 100 persons, binary response format
+```
+<sub>Data comes from eRm package, it is simulated, has 30 items and 100 persons binary response format.</sub>
+```r
 raschdat1 <- as.data.frame(raschdat1)
-
-# CML estimation using eRm package
+```
+### CML estimation using eRm package
+```r
 res.rasch <- RM(raschdat1)
-# Coefficients are item "easiness", need to multiply by -1 to obtain difficulties
+```
+<sub>Coefficients are item "easiness", need to multiply by -1 to obtain difficulties.</sub>
+```r
 coef(res.rasch)
 
 beta V1      beta V2      beta V3      beta V4      beta V5
@@ -53,8 +60,9 @@ beta V21     beta V22     beta V23     beta V24     beta V25
 0.936549373  0.989173502  0.681696830  0.002949605 -0.814227487
 beta V26     beta V27     beta V28     beta V29     beta V30
 1.207133468 -0.093927362 -0.290443234 -0.758721133  0.731734150
-
-# Repeating using regression
+```
+### Repeated using regression
+```r
 raschdat1.long <- raschdat1
 raschdat1.long$tot <- rowSums(raschdat1.long) # Create total score
 c(min(raschdat1.long$tot), max(raschdat1.long$tot)) # Min and max score
@@ -66,8 +74,9 @@ raschdat1.long <- tidyr::gather(raschdat1.long, item, value, V1:V30) # Wide to l
 # Make item factor
 raschdat1.long$item <- factor(
   raschdat1.long$item, levels = paste0("V", 1:30), ordered = TRUE)
-
-# Conditional maximum likelihood
+```
+#### Conditional maximum likelihood
+```r
 # Use clogistic() function in Epi package, note the contrasts
 res.clogis <- clogistic(
   value ~ item, strata = ID, raschdat1.long,
@@ -87,8 +96,9 @@ item21       item22       item23       item24       item25
 0.989181510  0.681691285  0.002973418 -0.814232531  1.207139323
 item26       item27       item28       item29        
 -0.093902568 -0.290430680 -0.758728000  0.731731557           
-
-# Note that item1 is V2 not V1, and item29 is V30. The values correspond to the results from the eRm package. To obtain the easiness of the first item V1, simply sum the coefficients of the item1 to item29 and multiply by -1
+```
+<sub>Note that item1 is V2 not V1, and item29 is V30. The values correspond to the results from the eRm package. To obtain the easiness of the first item V1, simply sum the coefficients of the item1 to item29 and multiply by -1.</sub>
+```r
 sum(coef(res.clogis)[1:29]) * -1
 
 [1] 1.565278
@@ -98,7 +108,8 @@ res.rasch$loglik # Rasch log-likelihood
 
 [1] -1434.482
 
-res.clogis$loglik # conditional logsitic log-likelihood, second value is log-likelihood of final model
+# conditional logsitic log-likelihood, second value is log-likelihood of final model
+res.clogis$loglik
 
 [1] -1630.180 -1434.482
 
@@ -108,10 +119,11 @@ res.clogis$loglik # conditional logsitic log-likelihood, second value is log-lik
 res.clogis$n
 
 [1] 3000
+```
+<sub>Aparently, all of the data (30 * 100) were used in the estimation. This is because no participant scored zero on all questions, or 1 on all questions (minimum was 1 and maximum was 26 out of 30). All the data contributed to estimation, so the variance estimation in this example was efficient(?)</sub>
 
-# Aparently, all of the data (30 * 100) were used in the estimation. This is because no participant scored zero on all questions, or 1 on all questions (minimum was 1 and maximum was 26 out of 30). All the data contributed to estimation, so the variance estimation in this example was efficient(?)
-
-# Estimation using joint maximum likelihood
+#### Joint maximum likelihood
+```r
 # Standard logistic regression, note the use of contrasts
 res.jml <- glm(
   value ~ item + factor(ID), data = raschdat1.long, family = binomial,
@@ -131,14 +143,20 @@ coef(res.jml)[1:30]
 0.971562267  1.026247034  0.706839644  0.002613624 -0.844497142
      item25       item26       item27       item28       item29
 1.252837340 -0.097839229 -0.301589647 -0.786973625  0.758800752
+```
 
-# item29 is the same as V30. Note that they are very similar to the coefficients from the eRm package. Differences result from differences in estimation method. To obtain the easiness of the first item V1, simply sum the coefficients of the item1 to item29 and multiply by -1
+<sub>item29 is the same as V30. Note that they are very similar to the coefficients from the eRm package. Differences result from differences in estimation method. To obtain the easiness of the first item V1, simply sum the coefficients of the item1 to item29 and multiply by -1.</sub>
+
+```r
 sum(coef(res.jml)[2:30]) * -1
 
 [1] 1.625572
+```
+#### Multilevel logistic regression or MML
 
-# Multilevel logistic regression or MML
-# glmer does not converge with the data. glmmTMB does. But I want the regression coefficients to be item difficulties/easiness on arrival, and glmmTMB does not provide an option for contrasts. What I do is run glmer twice, with the fixed effects and random effects from the first run as starting values in the second run
+<sub>glmer does not converge with the data. glmmTMB does. But I want the regression coefficients to be item difficulties/easiness on arrival, and glmmTMB does not provide an option for contrasts. What I do is run glmer twice, with the fixed effects and random effects from the first run as starting values in the second run.</sub>
+
+```r
 res.mlm.l <- glmer(
   value ~ item + (1 | ID), raschdat1.long, family = binomial,
   contrasts = list(item = rbind(rep(-1, 29), diag(29))))
@@ -151,19 +169,22 @@ res.mlm.l <- glmer(
   value ~ item + (1 | ID), raschdat1.long, family = binomial,
   contrasts = list(item = rbind(rep(-1, 29), diag(29))),
   start = list(fixef = fixef(res.mlm.l), theta = getME(res.mlm.l, "theta")))
-
-## NOW the estimation stuff is out of the way, to the fun stuff
-# I'll use the multilevel model to replicate the Rasch results
 ```
-```r
-# Person-Item map
 
-# eRm provides a person-item map with a single line:
+### Using the multilevel model to replicate the Rasch results
+
+#### Person-Item map
+
+<sub>eRm provides a person-item map with a single line:</sub>
+
+```r
 plotPImap(res.rasch)
 ```
 ![PIMAP](/img/posts/rasch_bin_logistic/pimap.png)
+
+<sub>To create this map, we need item difficulties (regression coefficients * -1) and person abilities (random intercepts).</sub>
+
 ```r
-# To create this map, we need item difficulties (regression coefficients * -1) and person abilities (random intercepts)
 item.diff <- -1 * coef(summary(res.mlm.l))[, 1] # Regression coefficients * -1
 item.diff[1] <- -1 * sum(item.diff[2:30]) # Difficulty of first item is sum of all others
 item.diff <- data.frame(
@@ -198,18 +219,21 @@ ggplot(pers.ab.df, aes(x = pers.ability)) +
   theme(axis.title.y = element_text(hjust = 1))
 ```
 ![PIMAP_MLM](/img/posts/rasch_bin_logistic/pimap_mlm.png)
-```r
-# The extreme person scores are different. This is down to differences in MML and whatever method eRm uses to obtain person measures. It has to use a two-step process of sorts because CML does not provide person measures.
-```
-```r
-# Item-Characteristic Curves
 
-# eRm provides a item characteristic curves with a single line:
+<sub>The extreme person scores are different. This is down to differences in MML and whatever method eRm uses to obtain person measures. It has to use a two-step process of sorts because CML does not provide person measures.</sub>
+
+#### Item-Characteristic Curves
+
+<sub>eRm provides a item characteristic curves with a single line:</sub>
+
+```r
 plotjointICC(res.rasch)
 ```
 ![ICC](/img/posts/rasch_bin_logistic/icc_joint.png)
+
+<sub>Here, we need to be able to predict the probability that a student will get an item correct, given their latent ability. What I did was use the logistic equation to predict probabilities. The log-odds given a latent ability is the difference between a latent ability and an item difficulty. Once this log-odds is obtained, calculating the predicted probability is easy. Since I'm using loops to do this, I also calculate item information, which is predicted probability multiplied by 1 - predicted probability. Here's how:</sub>
+
 ```r
-# Here, we need to be able to predict the probability that a student will get an item correct, given their latent ability. What I did was use the logistic equation to predict probabilities. The log-odds given a latent ability is the difference between a latent ability and an item difficulty. Once this log-odds is obtained, calculating the predicted probability is easy. Since I'm using loops to do this, I also calculate item information, which is predicted probability multiplied by 1 - predicted probability. Here's how:
 {
   theta.s <- seq(-6, 6, .01) # Person abilities for prediction
   pred.prob <- c() # Vector to hold predicted probabilities
@@ -245,8 +269,10 @@ ggplot(test.info.df, aes(x = theta, y = prob, colour = reorder(item, diff, mean)
   theme_classic()
 ```
 ![ICC_MLM](/img/posts/rasch_bin_logistic/icc_joint_mlm.png)
+
+<sub>I find the colours ambiguous, the code below would produce an item by item plot, not printed</sub>
+
 ```r
-# I find the colours ambiguous, this code would an item by item plot, not printed
 ggplot(test.info.df, aes(x = theta, y = prob)) + geom_line() +
   scale_x_continuous(breaks = seq(-6, 6, 2), limits = c(-4, 4)) +
   scale_y_continuous(labels = percent, breaks = seq(0, 1, .25)) +
@@ -256,15 +282,19 @@ ggplot(test.info.df, aes(x = theta, y = prob)) + geom_line() +
   facet_wrap(~ reorder(item, diff, mean), ncol = 10) +
   theme_classic()
 ```
-```r
-# Person parameter plot
 
-# Again, a one-liner in eRm:
+#### Person parameter plot
+
+<sub>Again, a one-liner in eRm:</sub>
+
+```r
 plot(person.parameter(res.rasch))
 ```
 ![PERS_PAR](/img/posts/rasch_bin_logistic/pp.png)
+
+<sub>Compared to others, this is fairly straightforward. We need the estimated person abilities:</sub>
+
 ```r
-# Compared to others, this is fairly straightforward. We need the estimated person abilities:
 raschdat1.long$ability <- ranef(res.mlm.l)$ID[, 1]
 
 # And GGPLOT-ING IT:
@@ -279,12 +309,13 @@ ggplot(raschdat1.long, aes(x = tot, y = ability)) +
 ```
 ![PERS_PAR_MLM](/img/posts/rasch_bin_logistic/pp_mlm.png)
 
+<sub>Both plots are not the same, though they overlap for the most part. Because estimation of person parameters is more tedious in CML, I'd trust the multilevel values.</sub>
+
+#### Item fit using mean square
+
+<sub>eRm one-liner:</sub>
+
 ```r
-# Both plots are not the same, though they overlap for the most part. Because estimation of person parameters is more tedious in CML, I'd trust the multilevel values.
-
-# Item fit using mean square
-
-# eRm one-liner:
 itemfit(person.parameter(res.rasch)) # Not printed
 
 # First, we need fitted and residual values
@@ -326,13 +357,14 @@ ggplot(item.fit.df, aes(x = mml, y = cml)) +
   labs(x = "glmer (MML)", y = "eRm (CML)", title = "Item fit comparing CML and MML")
 ```
 ![COMP_ITEM_FIT](/img/posts/rasch_bin_logistic/msq_comp_item.png)
-```r
-# Interestingly, it seems the MSQ from CML is almost always higher than that from the multilevel model (MML)
-```
-```r
-# Person fit using mean square
 
-# eRm one-liner:
+<sub>Interestingly, it seems the MSQ from CML is almost always higher than that from the multilevel model (MML).</sub>
+
+#### Person fit using mean square
+
+<sub>eRm one-liner:</sub>
+
+```r
 personfit(person.parameter(res.rasch)) # Not printed
 
 pers.ab.df$ID <- 1:100
@@ -371,22 +403,23 @@ ggplot(person.fit.df, aes(x = mml, y = cml)) +
   labs(x = "glmer (MML)", y = "eRm (CML)", title = "Person fit comparing CML and MML")
 ```
 ![COMP_PERS_FIT](/img/posts/rasch_bin_logistic/msq_comp_person.png)
-```r
-# Same pattern, MSQ from CML is almost always higher than that from the multilevel model (MML)
-# I used the conventional cut-offs to identify misfitting persons
-# Person 1 with low infit and outfit MSQ got only one question correct, cannot recall what stood out about 8, 26 and 53.
-```
-```r
-# TEST INFORMATION
 
-# eRm one-liner:
+<sub>Same pattern, MSQ from CML is almost always higher than that from the multilevel model (MML) I used the conventional cut-offs to identify misfitting persons. Person 1 with low infit and outfit MSQ got only one question correct, cannot recall what stood out about 8, 26 and 53.</sub>
+
+#### Test information
+
+<sub>eRm one-liner:</sub>
+
+```r
 plotINFO(res.rasch)
 ```
 ![IIC](/img/posts/rasch_bin_logistic/iic_joint.png)
-```r
-# We've done the work for this above when we created the ICCs, and calculated the test information. All that remains is plotting.
 
-# For the overall test information, we need to sum each items test information:
+<sub>We've done the work for this above when we created the ICCs, and calculated the test information. All that remains is plotting.</sub>
+
+<sub>For the overall test information, we need to sum each items test information:</sub>
+
+```r
 ggplot(summarise(group_by(test.info.df, theta), info = sum(info)),
        aes(x = theta, y = info)) + geom_line() +
   scale_x_continuous(breaks = -6:6) +
@@ -407,8 +440,10 @@ ggplot(test.info.df, aes(x = theta, y = info)) +
   theme_classic()
 ```
 ![IIC_OVER](/img/posts/rasch_bin_logistic/iic_overlay_mlm.png)
+
+<sub>And finally, using the Standard Error of Measurement (SEM), I thought you could create a confidence-band like plot. The SEM is the inverse of the root of test information.
+
 ```r
-# And finally, using the Standard Error of Measurement (SEM), I thought you could create a confidence-band like plot. The SEM is the inverse of the root of test information.
 ggplot(summarise(group_by(test.info.df, theta), info = 1 / sqrt(sum(info))),
        aes(x = theta)) +
   scale_x_continuous(breaks = seq(-3, 3, 1), limits = c(-3, 3)) +
@@ -420,9 +455,10 @@ ggplot(summarise(group_by(test.info.df, theta), info = 1 / sqrt(sum(info))),
   theme_classic()
 ```
 ![SEM](/img/posts/rasch_bin_logistic/sem.png)
-```r
-# This is the one I like best, because I feel it is most informative. This plot shows that for a kid with an estimated ability of -3, their ability is estimated with such precision that their actual score could lie between -1.5 and -4.5. In the middle at 0, the actual score could lie between, by my guess, -.8 and .8. I am not so sure this interpretation is correct, but it is appealing :).
-```
+
+<sub>This is the one I like best, because I feel it is most informative. This plot shows that for a kid with an estimated ability of -3, their ability is estimated with such precision that their actual score could lie between -1.5 and -4.5. In the middle at 0, the actual score could lie between, by my guess, -.8 and .8. I am not so sure this interpretation is correct, but it is appealing :).
+
+---
 
 I'm not sure what I have achieved here, apart from a lot of ggplot-ing, ... But having worked through this, I feel I can better understand what the model is trying to claim a series of items, and what some of its diagnostics are about. I guess the next step would be to replicate this on real data I am working on. The `ordinal` package could work for this, as it performs ordinal multilevel regression. However, it only performs cumulative link logistic regression, which Rijmen et al.[^1] call the _graded response model_ in IRT.
 

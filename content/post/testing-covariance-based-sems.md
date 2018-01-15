@@ -54,8 +54,11 @@ The nice thing is this is all implemented in `lavaan` in R. Misspecification cod
 
 ```{r}
 library(lavaan)
-# For this, I'll assume HolzingerSwineford1939 data are 9 questions, and the
-# respondents answered them x1 to x9 sequentially
+```
+
+<sub>For this, I'll assume HolzingerSwineford1939 data are 9 questions, and the respondents answered them x1 to x9 sequentially.
+
+```r
 data("HolzingerSwineford1939")
 # model syntax for HolzingerSwineford1939 dataset
 (syntax <- paste(
@@ -65,8 +68,11 @@ data("HolzingerSwineford1939")
   sep = "\n"))
 
 [1] "f1 =~ x1 + x2 + x3\nf2 =~ x4 + x5 + x6\nf3 =~ x7 + x8 + x9"
+```
 
-# Run model, standardize latent variables, & report standardized results
+<sub>Run model, standardize latent variables, & report standardized results:
+
+```r
 summary(hs.fit <- cfa(syntax, HolzingerSwineford1939, std.lv = TRUE),
         standardize = TRUE)
 
@@ -121,18 +127,13 @@ Variances:
     f1                1.000                               1.000    1.000
     f2                1.000                               1.000    1.000
     f3                1.000                               1.000    1.000
+```
 
-# Chi-square is statistically significant, there is at least some misfit
+<sub>Chi-square is statistically significant, there is at least some misfit
 
-# Request modification indices. Sort them from highest to lowest
-# Do not print any MI below 3 for convenience of presentation
-# Apply SSV method by requesting power = TRUE, and setting delta.
-# delta for those who skipped is unacceptable level of misfit, so a delta = .4
-# standard for factor loadings means I care about the factor loading if it is
-# missing from my model and its factor loading is greater than .4
-# By default, delta = .1 in lavaan. Based on SSV's recommendations, this is
-# adequate for correlated errors. So I select only correlated errors for output
-# using op = "~~"
+<sub>Request modification indices. Sort them from highest to lowest. Do not print any MI below 3 for convenience of presentation. Apply SSV method by requesting power = TRUE, and setting delta. delta for those who skipped is unacceptable level of misfit, so a delta = .4 standard for factor loadings means I care about the factor loading if it is missing from my model and its factor loading is greater than .4. By default, delta = .1 in lavaan. Based on SSV's recommendations, this is adequate for correlated errors. So I select only correlated errors for output using op = "~~"
+
+```r
 modificationindices(hs.fit, sort. = TRUE, minimum.value = 3, power = TRUE,
                     op = "~~")
 
@@ -160,25 +161,19 @@ lhs op rhs        mi    epc sepc.all delta   ncp power decision
 43  x1 ~~  x2  3.606 -0.184   -0.134   0.1 1.068 0.178      (i)
 45  x1 ~~  x4  3.554  0.078    0.058   0.1 5.797 0.673      (i)
 35  f2 =~  x8  3.359 -0.120   -0.118   0.1 2.351 0.335      (i)
+```
 
-# Check the decision column
-# x7 and x8 is termed misspecification because power is low at .193, yet the MI
-# is statistically significant. However, this may simply be due to order
-# effects, and such misspecification can be acceptable. I will not add this
-# correlated error to my model. Same goes for x8 and x9 (lhs 78) and x2 and x3
-# (lhs 51). These missing serial-correlations are acceptable misspecifications.
+<sub>Check the decision column. x7 and x8 is termed misspecification because power is low at .193, yet the MI is statistically significant. However, this may simply be due to order effects, and such misspecification can be acceptable. I will not add this correlated error to my model. Same goes for x8 and x9 (lhs 78) and x2 and x3 (lhs 51). These missing serial-correlations are acceptable misspecifications.
 
-# However consider x2 and x7 (lhs 55), low power at .373 yet significant MI.
-# Is there some theory connecting these two items? Can I explain the
-# suggested correlation?
+<sub>However consider x2 and x7 (lhs 55), low power at .373 yet significant MI. Is there some theory connecting these two items? Can I explain the suggested correlation?
 
-# Consider x4 and x8 (lhs 67), high power at .806, yet the MI is not
-# statistically significant, hence we can conclude there is no misspecification.
+<sub>Consider x4 and x8 (lhs 67), high power at .806, yet the MI is not statistically significant, hence we can conclude there is no misspecification.
 
-# Consider x1 and x4 (lhs 45), low power at .673, and the MI is not
-# statistically significant, hence this is inconclusive.
+<sub>Consider x1 and x4 (lhs 45), low power at .673, and the MI is not statistically significant, hence this is inconclusive.
 
-# Now for the factor loadings
+<sub>Now for the factor loadings:
+
+```r
 modificationindices(hs.fit, sort. = TRUE, power = TRUE, delta = .4, op = "=~")
 
 lhs op rhs        mi    epc sepc.all delta    ncp power decision
@@ -200,24 +195,16 @@ lhs op rhs        mi    epc sepc.all delta    ncp power decision
 32  f2 =~  x2  0.017 -0.011   -0.010   0.4 21.870 0.997     (nm)
 37  f3 =~  x1  0.014  0.015    0.013   0.4  9.700 0.876     (nm)
 40  f3 =~  x4  0.003 -0.003   -0.003   0.4 52.995 1.000     (nm)
-
-
-# See the first line, suggesting I load x9 on f1. The power is high, the MI is
-# significant and the EPC is higher than .4 suggesting that this is some type
-# of misspecification that we should pay attention to.
-
-# However, the next line suggests I load x7 on f1. The power is high, the MI is
-# significant, but the EPC is .38, less than .4, suggesting that we do not
-# consider this misspecification to be high enough to warrant modifying the
-# model. Same goes for a number of suggested modifications with decision epc:nm.
-
-# Then there is a final group with high power, but the MIs are not
-# statistically significant, so we can conclude there is no misspecification.
-
-# Note that you can also tell lavaan what constitutes high power using the
-# `high.power = ` argument. 75% is what SSV use and lavaan's default but you
-# can be flexible.
 ```
+<sub>See the first line, suggesting I load x9 on f1. The power is high, the MI is significant and the EPC is higher than .4 suggesting that this is some type of misspecification that we should pay attention to.
+
+<sub>However, the next line suggests I load x7 on f1. The power is high, the MI is significant, but the EPC is .38, less than .4, suggesting that we do not consider this misspecification to be high enough to warrant modifying the model. Same goes for a number of suggested modifications with decision epc:nm.
+
+<sub>Then there is a final group with high power, but the MIs are not statistically significant, so we can conclude there is no misspecification.
+
+<sub>Note that you can also tell lavaan what constitutes high power using the `high.power = ` argument. 75% is what SSV use and is lavaan's default but you can be flexible.
+
+---
 
 Note that you make only one change to the model at a time. The EPC and MI, are calculated assuming other parameters are approximately correct, hence the way to run the steps above is to make one change, then re-request the MIs, EPC, and power from `lavaan`.
 

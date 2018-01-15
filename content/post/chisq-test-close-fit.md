@@ -76,9 +76,11 @@ writeLines(syntax <- paste(
 g =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
 textual =~ x4 + x5 + x6
 speed =~ x7 + x8 + x9
+```
 
-# Run model & report fit measures
-# Reporting only fit statistics relevant to this demonstration
+<sub>Run model & report fit measures. Reporting only fit statistics relevant to this demonstration:
+
+```r
 summary(hs.fit <- cfa(syntax, HolzingerSwineford1939, std.lv = TRUE,
                       orthogonal = TRUE), fit.measures = TRUE)
 
@@ -96,38 +98,39 @@ Root Mean Square Error of Approximation:
   RMSEA                                          0.058
   90 Percent Confidence Interval          0.032  0.083
   P-value RMSEA <= 0.05                          0.276
+```
+<sub>Chi-square is statistically significant, this test of perfect fit suggests
+the misfit between our model-implied cov matrix and sample cov matrix is
+greater than expected due to sampling variability.
 
-# Chi-square is statistically significant, this test of perfect fit suggests
-# the misfit between our model-implied cov matrix and sample cov matrix is
-# greater than expected due to sampling variability.
-
-# The default Chi-square test:
-
+<sub>The default Chi-square test:
+```r
 pchisq(q = 42.291, df = 21, ncp = 0, lower.tail = FALSE)
 
 [1] 0.003867178
+```
 
-# Use formula above to calculate non-centrality parameter for test of close fit
-# .0025 multiplied by model degrees of freedom by sample size - 1
+<sub>Use formula above to calculate non-centrality parameter for test of close fit: .0025 multiplied by model degrees of freedom by sample size - 1
 
+```r
 (ncp.close <- .0025 * 21 * (301 - 1))
 
 [1] 15.75
+```
 
-# Calculate Chi-square test of close fit
+<sub>Calculate Chi-square test of close fit:
 
+```r
 pchisq(q = 42.291, df = 21, ncp = ncp.close, lower.tail = FALSE)
 
 [1] 0.2740353
+```
 
-# The p-value for a test of close fit is .27, close to the value reported by
-# lavaan. The reason they are not closer is that lavaan does not subtract 1
-# from the sample size when calculating the non-centrality parameter under
-# its default settings for ML. See the final footnote below for details.
+<sub>The p-value for a test of close fit is .27, close to the value reported by lavaan. The reason they are not closer is that lavaan does not subtract 1 from the sample size when calculating the non-centrality parameter under its default settings for ML. See below for details.[^4]
 
-# And if we lower our standards to conduct a chi-square test of mediocre fit:
-# .0064 multiplied by model degrees of freedom by sample size - 1
+<sub>And if we lower our standards to conduct a chi-square test of mediocre fit: .0064 multiplied by model degrees of freedom by sample size - 1
 
+```r
 (ncp.med <- .0064 * 21 * (301 - 1))
 
 [1] 40.32
@@ -136,9 +139,10 @@ pchisq(q = 42.291, df = 21, ncp = ncp.med, lower.tail = FALSE)
 
 [1] 0.9199686
 
-# If we assume mediocre misspecification in our model, the probability of
-# observing our model-implied covariance matrix is 92%. Pretty good.
 ```
+<sub>If we assume mediocre misspecification in our model, the probability of observing our model-implied covariance matrix is 92%. Pretty good.
+
+---
 
 In closing, SEM practitioners typically report the $\chi^2$-test, but routinely expect the test to detect model misspecification, so often ignore it in practice. I hope the steps above show how one can conduct $\chi^2$-tests that assume some degree of model misspecification as the null hypothesis. I guess I hope that by doing this, we can make our $\chi^2$-tests somewhat relevant. The nice thing about the RMSEA and CI lavaan provides is that together, they may be more informative than a p-value from a $\chi^2$ test.
 
